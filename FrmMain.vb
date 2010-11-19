@@ -1,5 +1,5 @@
 ﻿Public Class FrmMain
-
+    Dim wait As New List(Of String)
     Dim arrayChart(9, 4) As String
     ''' <summary>
     ''' Closes the program
@@ -94,7 +94,9 @@
 
                     If arrayChart(i, x) = strRemove Then
 
-                        arrayChart(i, x) = ""
+                        arrayChart(i, x) = wait.First
+
+                        MessageBox.Show(arrayChart(i, x) & " has been added to seating chart")
 
                     End If
 
@@ -141,22 +143,28 @@
     ''' <remarks></remarks>
     Private Sub btnWait_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnWait.Click
 
-        Dim strNames As New List(Of String)
-        strNames.Add("Brandon")
-        strNames.Add("Andrea")
-        strNames.Add("Shad")
-        strNames.Add("Nick")
-        strNames.Add(txtWaiting.Text)
+       
 
         Try
+            wait.add(txtWaiting.Text)
+
+            txtWaiting.Clear()
+
+            lstWait.Items.Clear()
+
+            For Each Name As String In wait
+
+                lstWait.Items.Add(Name)
+
+            Next
 
             For i As Integer = 0 To 9
 
                 For x As Integer = 0 To 3
 
-                    If arrayChart(i, x) = "" Then
+                    If arrayChart(i, x) = wait.First Then
 
-                        arrayChart(i, x) = strNames.First
+                        wait.Remove(wait.First)
 
                     End If
 
